@@ -1,0 +1,9 @@
+{
+  "name": "wheeloffortune",
+  "version": "1.0.0",
+  "main": "index.html",
+  "license": "MIT",
+  "dependencies": {
+    "matter-js": "^0.17.1"
+  }
+}

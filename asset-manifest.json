@@ -1,17 +1,20 @@
 {
   "files": {
-    "main.js": "/wheeloffortune/static/js/main.c489ae61.chunk.js",
-    "main.js.map": "/wheeloffortune/static/js/main.c489ae61.chunk.js.map",
+    "main.css": "/wheeloffortune/static/css/main.308f78b1.chunk.css",
+    "main.js": "/wheeloffortune/static/js/main.6bf9645a.chunk.js",
+    "main.js.map": "/wheeloffortune/static/js/main.6bf9645a.chunk.js.map",
     "runtime-main.js": "/wheeloffortune/static/js/runtime-main.9acd74ec.js",
     "runtime-main.js.map": "/wheeloffortune/static/js/runtime-main.9acd74ec.js.map",
-    "static/js/2.f3754d62.chunk.js": "/wheeloffortune/static/js/2.f3754d62.chunk.js",
-    "static/js/2.f3754d62.chunk.js.map": "/wheeloffortune/static/js/2.f3754d62.chunk.js.map",
+    "static/js/2.ac86724c.chunk.js": "/wheeloffortune/static/js/2.ac86724c.chunk.js",
+    "static/js/2.ac86724c.chunk.js.map": "/wheeloffortune/static/js/2.ac86724c.chunk.js.map",
     "index.html": "/wheeloffortune/index.html",
-    "static/js/2.f3754d62.chunk.js.LICENSE.txt": "/wheeloffortune/static/js/2.f3754d62.chunk.js.LICENSE.txt"
+    "static/css/main.308f78b1.chunk.css.map": "/wheeloffortune/static/css/main.308f78b1.chunk.css.map",
+    "static/js/2.ac86724c.chunk.js.LICENSE.txt": "/wheeloffortune/static/js/2.ac86724c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.9acd74ec.js",
-    "static/js/2.f3754d62.chunk.js",
-    "static/js/main.c489ae61.chunk.js"
+    "static/js/2.ac86724c.chunk.js",
+    "static/css/main.308f78b1.chunk.css",
+    "static/js/main.6bf9645a.chunk.js"
   ]
 }

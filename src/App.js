@@ -6,26 +6,19 @@ import MouseControl from "./MouseControl";
 
 export default () => {
     const [angle, setAngle] = useState(0)
+    const [winner, setWinner] = useState('')
     const [wheelBase, setWheelBase] = useState(null)
 
     const onSpin = useCallback(() => {
         Body.setAngularVelocity(wheelBase, wheelBase.angularVelocity + 3 * Math.PI/100);
     }, [wheelBase])
 
-    useEffect(() => {
-        if (!wheelBase) return
-
-        setInterval(() => {
-            const currentAngle = 180/Math.PI * wheelBase.angle % 360;
-            setAngle(currentAngle.toFixed(1))
-        }, 50)
-    }, [wheelBase])
-
     return <div>
         <button onClick={onSpin}>spin the wheel!</button>
-        <label>Angle: </label><span>{angle}</span>
+        <label>Angle: </label><span>{angle.toFixed(1)}</span>
+        <label>Winner: </label><span>{winner}</span>
         <MatterContextProvider>
-            <Wheel onLoad={setWheelBase}/>
+            <Wheel onLoad={setWheelBase} onLanded={setWinner} onSpinning={setAngle} />
             <MouseControl />
         </MatterContextProvider>
     </div>

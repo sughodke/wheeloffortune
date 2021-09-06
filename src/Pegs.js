@@ -7,8 +7,8 @@ export default ({ wheelBase, outerRadius, numPegs, pegRadius = 4 }) => {
     const pegSpacing = numPegs / 2
 
     const wheelPositions = Array(numPegs).fill(0).map((_, i) => ({
-        x: innerRadius * Math.sin(i * Math.PI/pegSpacing + Math.PI/pegSpacing/2),
-        y: innerRadius * Math.cos(i * Math.PI/pegSpacing + Math.PI/pegSpacing/2)
+        x: innerRadius * Math.sin(i * Math.PI/pegSpacing),
+        y: innerRadius * Math.cos(i * Math.PI/pegSpacing)
     }))
 
     const wheelPegs = wheelPositions.map(p =>

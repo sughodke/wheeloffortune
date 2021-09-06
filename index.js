@@ -15,20 +15,28 @@ const engine = Engine.create();
 // create a renderer
 const render = Render.create({
     element: document.body,
-    engine: engine
+    engine: engine,
+    options: {
+        showAngleIndicator: false,
+        wireframes: false
+    }
 });
 
-// https://gamedev.stackexchange.com/questions/72170/how-simulate-the-return-effect-of-the-wheel-of-fortune-needle/72414
+// https://gamedev.stackexchange.com/a/72414
 
 // create wheel that can spin
 const outerRadius = 100
 const pegSpacing = 8;
 const wheelBase = Bodies.circle(0, 0, outerRadius, {
     collisionFilter: {
-        group: -1,
+        group: 2,
         category: 2,
-        mask: 0
-    }}, pegSpacing * 2);
+        mask: 0x010
+    },
+    render: {
+        fillStyle: '#5f5f7e'
+    },
+    }, pegSpacing * 2);
 const wheelConstraint = Constraint.create({
     pointA: { x: 0, y: 0 },
     bodyB: wheelBase,
@@ -39,14 +47,20 @@ Composite.add(engine.world, [wheelBase, wheelConstraint]);
 
 // add the pegs to the wheel
 const innerRadius = outerRadius - 10;
-const pegRadius = 6;
+const pegRadius = 4;
 const wheelPositions = Array(pegSpacing * 2).fill(0).map((_, i) => ({
     x: innerRadius * Math.sin(i * Math.PI/pegSpacing + Math.PI/pegSpacing/2),
     y: innerRadius * Math.cos(i * Math.PI/pegSpacing + Math.PI/pegSpacing/2)
 }))
 const wheelPegs = wheelPositions.map(p =>
-    Bodies.circle(p.x, p.y, pegRadius, { mass: 0.2 }, 6));
-wheelPegs.map((p, i) => Body.setInertia(p, Infinity))
+    Bodies.circle(p.x, p.y, pegRadius, {
+        mass: 2,
+        friction: 0.4,
+        slop: 1
+    }, 6));
+
+// https://stackoverflow.com/a/52693401/721564
+wheelPegs.map(p => Body.setInertia(p, Infinity))
 
 const wheelPegsJoint = wheelPegs.map((p, i) =>
     Constraint.create({
@@ -63,6 +77,8 @@ Composite.add(engine.world, [...wheelPegs, ...wheelPegsJoint]);
 // add the needle
 const needle = Bodies.trapezoid(0, outerRadius * -1.10, 10, 40, 0.85, {
     angle: Math.PI,
+    friction: 0.4,
+    slop: 1
 });
 const needleConstraint = Constraint.create({
     pointA: { x: 0, y: outerRadius * -1.10 },
@@ -72,15 +88,15 @@ const needleConstraint = Constraint.create({
 const needleJointLeft = Constraint.create({
     pointA: { x: -20, y: outerRadius * -1.05 },
     bodyB: needle,
-    pointB: { x: 0, y: -10 },
-    stiffness: 0.1,
+    pointB: { x: 0, y: -15 },
+    stiffness: 0.01,
     damping: 0.5,
 });
 const needleJointRight = Constraint.create({
     pointA: { x: 20, y: outerRadius * -1.05 },
     bodyB: needle,
-    pointB: { x: 0, y: -10 },
-    stiffness: 0.1,
+    pointB: { x: 0, y: -15 },
+    stiffness: 0.01,
     damping: 0.5,
 });
 Composite.add(engine.world, [needle, needleConstraint, needleJointLeft, needleJointRight]);
@@ -92,7 +108,7 @@ document.getElementById('spin').addEventListener('click', () => {
 const angleEl = document.getElementById('angle')
 setInterval(() => {
     const angle = 180/Math.PI * wheelBase.angle % 360;
-    angleEl.innerText = `${ angle.toFixed(1) }`
+    angleEl.innerText = angle.toFixed(1)
 }, 50)
 
 

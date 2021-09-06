@@ -1,10 +1,8 @@
-import { useEffect } from "react";
-import useMatter from "./useMatter";
-import { Bodies, Composite, Constraint } from "matter-js";
+import { Bodies, Constraint } from "matter-js";
+import {useWorldAdd} from "./useWorld";
 
 // add the needle
 export default ({ outerRadius }) => {
-    const { engine } = useMatter()
     const needle = Bodies.trapezoid(0, outerRadius * -1.10, 10, 40, 0.85, {
         angle: Math.PI,
         friction: 0.4,
@@ -29,9 +27,7 @@ export default ({ outerRadius }) => {
         stiffness: 0.01,
         damping: 0.5,
     });
-    useEffect(() => {
-        Composite.add(engine.world, [needle, needleConstraint, needleJointLeft, needleJointRight]);
-    }, [engine])
+    useWorldAdd([needle, needleConstraint, needleJointLeft, needleJointRight], true)
 
     return <></>
 }

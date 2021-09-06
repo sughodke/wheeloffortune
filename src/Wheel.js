@@ -1,12 +1,11 @@
-import {useEffect, useLayoutEffect} from "react"
-import { Bodies, Body, Composite, Constraint } from "matter-js"
-import useMatter from "./useMatter"
+import {useEffect} from "react"
+import {Bodies, Constraint} from "matter-js"
+import {useWorldAdd} from "./useWorld";
 import Needle from "./Needle";
 import Pegs from "./Pegs";
 
 // create wheel that can spin
 export default ({ numPegs = 16, outerRadius = 100, onLoad }) => {
-    const { engine } = useMatter()
 
     const wheelBase = Bodies.circle(0, 0, outerRadius, {
         collisionFilter: {
@@ -29,10 +28,7 @@ export default ({ numPegs = 16, outerRadius = 100, onLoad }) => {
         onLoad(wheelBase)
     }, [])
 
-
-    useLayoutEffect(() => {
-        Composite.add(engine.world, [wheelBase, wheelConstraint])
-    }, [engine])
+    useWorldAdd([wheelBase, wheelConstraint])
 
     return <>
         <Pegs numPegs={numPegs} outerRadius={outerRadius} wheelBase={wheelBase} />

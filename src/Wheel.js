@@ -63,16 +63,19 @@ const createTexture = (count = 16, r = 100, cx = 100, cy = 100) => {
     const image = new Image();
     image.src = canvas.toDataURL();
 
-    return image
+    return [ image, lookup ]
 }
 
 // create wheel that can spin
 export default ({ numPegs = 16, outerRadius = 100, onLoad }) => {
     const { render } = useMatter()
+    const [lookup, setLookup] = useState({})
 
     // Hack to load in the texture
     useEffect(() => {
-        render.textures['USER_DEFINED_1'] = createTexture(numPegs)
+        const [texture, _lookup] = createTexture(numPegs, outerRadius)
+        render.textures['USER_DEFINED_1'] = texture
+        setLookup(_lookup)
     }, [render])
 
     const [wheelBase] = useWorldAdd2(() => {

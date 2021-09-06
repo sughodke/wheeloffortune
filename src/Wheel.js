@@ -1,6 +1,6 @@
 import {Bodies, Body, Composite, Constraint} from "matter-js"
 import useMatter from "./useMatter"
-import {useEffect} from "react"
+import { useLayoutEffect } from "react"
 import Needle from "./Needle";
 
 // add the pegs to the wheel
@@ -34,9 +34,7 @@ const Pegs = ({ wheelBase, outerRadius, numPegs, pegRadius = 4 }) => {
             // damping: 0.05,
             length: 0,
         }))
-
-    useEffect(() => {
-        console.log('pegs')
+    useLayoutEffect(() => {
         Composite.add(engine.world, [...wheelPegs, ...wheelPegsJoint])
     }, [engine])
 
@@ -64,8 +62,7 @@ export default ({ numPegs = 16, outerRadius = 100 }) => {
         length: 0
     })
 
-    useEffect(() => {
-        console.log('wheel')
+    useLayoutEffect(() => {
         Composite.add(engine.world, [wheelBase, wheelConstraint])
     }, [engine])
 

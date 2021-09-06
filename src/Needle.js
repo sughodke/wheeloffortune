@@ -1,6 +1,6 @@
-import {Bodies, Composite, Constraint} from "matter-js";
+import { useEffect } from "react";
 import useMatter from "./useMatter";
-import {useEffect} from "react";
+import { Bodies, Composite, Constraint } from "matter-js";
 
 // add the needle
 export default ({ outerRadius }) => {
@@ -30,7 +30,6 @@ export default ({ outerRadius }) => {
         damping: 0.5,
     });
     useEffect(() => {
-        console.log('needle')
         Composite.add(engine.world, [needle, needleConstraint, needleJointLeft, needleJointRight]);
     }, [engine])
 

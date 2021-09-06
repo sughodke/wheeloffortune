@@ -5,11 +5,29 @@ import Needle from "./Needle";
 import Pegs from "./Pegs";
 import useMatter from "./useMatter";
 
+// https://stackoverflow.com/a/6062196/721564
+CanvasRenderingContext2D.prototype.fillTextCircle = function(text,x,y,radius,startRotation){
+    var numRadsPerLetter = 2*Math.PI / text.length;
+    this.save();
+    this.translate(x,y);
+    this.rotate(startRotation);
+
+    for(var i=0;i<text.length;i++){
+        this.save();
+        this.rotate(i*numRadsPerLetter);
+
+        this.fillText(text[i],0,-radius);
+        this.restore();
+    }
+    this.restore();
+}
+
 const createTexture = (count = 16, r = 100, cx = 100, cy = 100) => {
     const canvas = document.createElement('canvas');
     canvas.width = canvas.height = 200
     const ctx = canvas.getContext('2d');
 
+    // https://stackoverflow.com/a/50529742/721564
     function getRandomColour() {
         const red = Math.floor(Math.random() * 255);
         const green = Math.floor(Math.random() * 255);
@@ -30,6 +48,9 @@ const createTexture = (count = 16, r = 100, cx = 100, cy = 100) => {
         ctx.closePath();
         ctx.fill();
     })
+
+    ctx.font = "15px Arial";
+    ctx.fillTextCircle('123456789abcdefg', cx, cy, r - 30, Math.PI/count/2)
 
     const image = new Image();
     image.src = canvas.toDataURL();

@@ -6,20 +6,28 @@ import Pegs from "./Pegs";
 import useMatter from "./useMatter";
 
 // https://stackoverflow.com/a/6062196/721564
-CanvasRenderingContext2D.prototype.fillTextCircle = function(text,x,y,radius,startRotation){
-    var numRadsPerLetter = 2*Math.PI / text.length;
+CanvasRenderingContext2D.prototype.fillTextCircle = function(text,x,y,radius,startRotation) {
+    text = Array.from(text)
+    const numRadsPerLetter = 2 * Math.PI / text.length;
     this.save();
     this.translate(x,y);
     this.rotate(startRotation);
 
-    for(var i=0;i<text.length;i++){
+    const lookup = {}
+    text.forEach((ch, i) => {
         this.save();
-        this.rotate(i*numRadsPerLetter);
+        const ang = i*numRadsPerLetter
+        this.rotate(ang);
 
-        this.fillText(text[i],0,-radius);
+        this.fillText(ch,0,-radius);
         this.restore();
-    }
+
+        lookup[ang] = ch
+    })
+
     this.restore();
+
+    return lookup
 }
 
 const createTexture = (count = 16, r = 100, cx = 100, cy = 100) => {

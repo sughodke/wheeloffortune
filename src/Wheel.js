@@ -1,6 +1,6 @@
-import {Bodies, Body, Composite, Constraint} from "matter-js"
+import {useEffect, useLayoutEffect} from "react"
+import { Bodies, Body, Composite, Constraint } from "matter-js"
 import useMatter from "./useMatter"
-import { useLayoutEffect } from "react"
 import Needle from "./Needle";
 import Pegs from "./Pegs";
 

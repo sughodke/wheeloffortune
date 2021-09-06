@@ -1,16 +1,8 @@
-import {
-    Render,
-    Runner,
-    Body
-} from 'matter-js'
+import {Body} from 'matter-js'
 import {MatterContextProvider} from "./MatterContext";
-import {useCallback, useEffect, useRef, useState} from "react";
-import useMatter from "./useMatter";
+import {useCallback, useEffect, useState} from "react";
 import Wheel from "./Wheel";
 import MouseControl from "./MouseControl";
-
-// https://gamedev.stackexchange.com/a/72414
-
 
 export default () => {
     const [angle, setAngle] = useState(0)

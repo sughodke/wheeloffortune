@@ -1,6 +1,6 @@
 import {useEffect} from "react"
 import {Bodies, Constraint} from "matter-js"
-import {useWorldAdd} from "./useWorld";
+import {useWorldAdd2} from "./useWorld";
 import Needle from "./Needle";
 import Pegs from "./Pegs";
 import useMatter from "./useMatter";
@@ -46,30 +46,29 @@ export default ({ numPegs = 16, outerRadius = 100, onLoad }) => {
         render.textures['USER_DEFINED_1'] = createTexture(numPegs)
     }, [render])
 
-    const wheelBase = Bodies.circle(0, 0, outerRadius, {
-        collisionFilter: {
-            group: -1,
-            category: 0,
-            mask: 0x0
-        },
-        render: {
-            sprite: {
-                texture: 'USER_DEFINED_1'
-            }
-        },
-    }, numPegs)
+    const [wheelBase] = useWorldAdd2(() => {
+        const wheelBase = Bodies.circle(0, 0, outerRadius, {
+            collisionFilter: {
+                group: -1,
+                category: 0,
+                mask: 0x0
+            },
+            render: {
+                sprite: {
+                    texture: 'USER_DEFINED_1'
+                }
+            },
+        }, numPegs)
 
-    const wheelConstraint = Constraint.create({
-        pointA: { x: 0, y: 0 },
-        bodyB: wheelBase,
-        length: 0
-    })
+        const wheelConstraint = Constraint.create({
+            pointA: { x: 0, y: 0 },
+            bodyB: wheelBase,
+            length: 0
+        })
 
-    useEffect(() => {
         onLoad(wheelBase)
-    }, [])
-
-    useWorldAdd([wheelBase, wheelConstraint])
+        return [wheelBase, wheelConstraint]
+    })
 
     return <>
         <Pegs numPegs={numPegs} outerRadius={outerRadius} wheelBase={wheelBase} />

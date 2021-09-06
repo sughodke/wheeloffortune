@@ -5,7 +5,7 @@ import Needle from "./Needle";
 import Pegs from "./Pegs";
 
 // create wheel that can spin
-export default ({ numPegs = 16, outerRadius = 100 }) => {
+export default ({ numPegs = 16, outerRadius = 100, onLoad }) => {
     const { engine } = useMatter()
 
     const wheelBase = Bodies.circle(0, 0, outerRadius, {
@@ -24,6 +24,11 @@ export default ({ numPegs = 16, outerRadius = 100 }) => {
         bodyB: wheelBase,
         length: 0
     })
+
+    useEffect(() => {
+        onLoad(wheelBase)
+    }, [])
+
 
     useLayoutEffect(() => {
         Composite.add(engine.world, [wheelBase, wheelConstraint])

@@ -67,7 +67,7 @@ const createTexture = (count = 16, r = 100, cx = 100, cy = 100) => {
 }
 
 // create wheel that can spin
-export default ({ numPegs = 16, outerRadius = 100, onLoad }) => {
+export default ({ numPegs = 16, outerRadius = 100, onLoad, onLanded, onSpinning }) => {
     const { render } = useMatter()
     const [lookup, setLookup] = useState({})
 
@@ -101,6 +101,29 @@ export default ({ numPegs = 16, outerRadius = 100, onLoad }) => {
         onLoad(wheelBase)
         return [wheelBase, wheelConstraint]
     })
+
+    useEffect(() => {
+        if (!wheelBase) return
+
+        setInterval(() => {
+            let currentAngle = wheelBase.angle > 0
+                ? wheelBase.angle % (Math.PI*2)
+                : (wheelBase.angle % -(Math.PI*2)) + Math.PI*2
+
+            // currentAngle += 3 *Math.PI / 4
+            onSpinning(currentAngle)
+
+            let last
+            Object.keys(lookup).sort().forEach(i => {
+                last = i < currentAngle ? i : last
+            })
+            onLanded(lookup[last])
+
+            if (wheelBase.isSleeping) {
+                onLanded('❤️')
+            }
+        }, 50)
+    }, [wheelBase, lookup])
 
     return <>
         <Pegs numPegs={numPegs} outerRadius={outerRadius} wheelBase={wheelBase} />

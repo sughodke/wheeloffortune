@@ -19,6 +19,7 @@ export default ({ outerRadius }) => {
         pointB: { x: 0, y: -15 },
         stiffness: 0.01,
         damping: 0.5,
+        render: { visible: false }
     });
     const needleJointRight = Constraint.create({
         pointA: { x: 20, y: outerRadius * -1.05 },
@@ -26,6 +27,7 @@ export default ({ outerRadius }) => {
         pointB: { x: 0, y: -15 },
         stiffness: 0.01,
         damping: 0.5,
+        render: { visible: false }
     });
     useWorldAdd([needle, needleConstraint, needleJointLeft, needleJointRight], true)
 
